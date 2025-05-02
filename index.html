@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asset Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen font-sans">
+
+  <!-- Header -->
+  <header class="flex justify-between items-center px-6 py-4 bg-gray-800 shadow-md">
+    <h1 class="text-xl font-bold">My Asset Dashboard</h1>
+    
+    <!-- Account Dropdown -->
+    <div class="relative group">
+      <button class="flex items-center bg-gray-700 px-4 py-2 rounded hover:bg-gray-600">
+        Account
+        <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      <div class="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-md shadow-lg hidden group-hover:block">
+        <a href="#" class="block px-4 py-2 hover:bg-gray-700">Profile</a>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-700">Settings</a>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-700">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex flex-col items-center justify-center mt-20">
+    <!-- Total Assets Card -->
+    <div class="bg-gray-800 p-8 rounded-xl shadow-md text-center w-80">
+      <h2 class="text-lg font-semibold mb-4">Total Assets</h2>
+      <p class="text-3xl font-bold text-green-400">₹ 75,000</p>
+    </div>
+
+    <!-- Buttons -->
+    <div class="mt-8 flex space-x-6">
+      <button class="bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded-xl shadow">Recharge</button>
+      <button class="bg-red-600 hover:bg-red-500 px-6 py-3 rounded-xl shadow">Withdraw</button>
+    </div>
+  </main>
+
+</body>
+</html>
