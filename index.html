@@ -29,19 +29,53 @@
   </header>
 
   <!-- Main Content -->
-  <main class="flex flex-col items-center justify-center mt-20">
+  <main class="flex flex-col items-center justify-center mt-20 space-y-10">
+
     <!-- Total Assets Card -->
     <div class="bg-gray-800 p-8 rounded-xl shadow-md text-center w-80">
       <h2 class="text-lg font-semibold mb-4">Total Assets</h2>
       <p class="text-3xl font-bold text-green-400">₹ 75,000</p>
     </div>
 
+    <!-- Currency Info -->
+    <div class="bg-gray-800 p-6 rounded-xl w-80 text-center shadow-md">
+      <h3 class="text-lg font-semibold mb-4">Live Rates</h3>
+      <p class="mb-2">USD to INR: <span id="usdRate" class="text-yellow-400 font-bold">Loading...</span></p>
+      <p>BTC to INR: <span id="btcRate" class="text-yellow-400 font-bold">Loading...</span></p>
+    </div>
+
     <!-- Buttons -->
-    <div class="mt-8 flex space-x-6">
+    <div class="flex space-x-6">
       <button class="bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded-xl shadow">Recharge</button>
       <button class="bg-red-600 hover:bg-red-500 px-6 py-3 rounded-xl shadow">Withdraw</button>
     </div>
+
   </main>
+
+  <!-- Scripts -->
+  <script>
+    // Fetch USD to INR from ExchangeRate API
+    fetch('https://api.exchangerate.host/latest?base=USD&symbols=INR')
+      .then(response => response.json())
+      .then(data => {
+        const usdToInr = data.rates.INR.toFixed(2);
+        document.getElementById('usdRate').textContent = `₹ ${usdToInr}`;
+      })
+      .catch(() => {
+        document.getElementById('usdRate').textContent = 'Error';
+      });
+
+    // Fetch BTC to INR from CoinGecko
+    fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=inr')
+      .then(response => response.json())
+      .then(data => {
+        const btcToInr = data.bitcoin.inr.toLocaleString('en-IN');
+        document.getElementById('btcRate').textContent = `₹ ${btcToInr}`;
+      })
+      .catch(() => {
+        document.getElementById('btcRate').textContent = 'Error';
+      });
+  </script>
 
 </body>
 </html>
