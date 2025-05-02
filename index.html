@@ -1,92 +1,144 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Asset Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crypto Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-900 text-white min-h-screen font-sans">
-
+<body class="bg-black text-white font-sans">
   <!-- Header -->
-  <header class="flex justify-between items-center px-6 py-4 bg-gray-800 shadow-md">
-    <h1 class="text-xl font-bold">My Asset Dashboard</h1>
-    
-    <!-- Account Dropdown -->
-    <div class="relative group">
-      <button class="flex items-center bg-gray-700 px-4 py-2 rounded hover:bg-gray-600">
-        Account
-        <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      <div class="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-md shadow-lg hidden group-hover:block">
-        <a href="#" class="block px-4 py-2 hover:bg-gray-700">Profile</a>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-700">Settings</a>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-700">Logout</a>
-      </div>
-    </div>
+  <header class="flex justify-between items-center p-4 text-lg border-b border-gray-700">
+    <div class="text-gray-300">coin.example.com</div>
+    <div class="text-xl font-semibold">Space7</div>
   </header>
 
-  <!-- Main Content -->
-  <main class="flex flex-col items-center justify-center mt-20 space-y-10">
+  <!-- Total Assets -->
+  <section class="text-center py-6">
+    <div class="text-gray-400 text-sm">Total assets (INR)</div>
+    <div id="assetAmount" class="text-3xl font-bold mt-2">₹ 0.00</div>
+  </section>
 
-    <!-- Total Assets Card -->
-    <div class="bg-gray-800 p-8 rounded-xl shadow-md text-center w-80">
-      <h2 class="text-lg font-semibold mb-4">Total Assets</h2>
-      <p class="text-3xl font-bold text-green-400">₹ 75,000</p>
+  <!-- Action Buttons -->
+  <div class="flex justify-center gap-6 py-4">
+    <button onclick="openRechargeModal()" class="bg-yellow-500 hover:bg-yellow-400 px-6 py-3 rounded-lg">Recharge</button>
+    <button onclick="openWithdrawModal()" class="bg-yellow-500 hover:bg-yellow-400 px-6 py-3 rounded-lg">Withdrawal</button>
+  </div>
+
+  <!-- Quote Section -->
+  <section class="px-4">
+    <h2 class="text-yellow-400 mb-4 text-lg">Quote</h2>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="bg-gray-800 rounded-xl p-4">
+        <div class="text-sm text-gray-400">BTC/USDT</div>
+        <div class="text-green-400 text-sm">+0.19%</div>
+        <div id="btcPrice" class="text-xl font-bold mt-2">--</div>
+      </div>
+      <div class="bg-gray-800 rounded-xl p-4">
+        <div class="text-sm text-gray-400">ETH/USDT</div>
+        <div class="text-green-400 text-sm">+1.61%</div>
+        <div id="ethPrice" class="text-xl font-bold mt-2">--</div>
+      </div>
     </div>
+  </section>
 
-    <!-- Currency Info -->
-    <div class="bg-gray-800 p-6 rounded-xl w-80 text-center shadow-md">
-      <h3 class="text-lg font-semibold mb-4">Live Rates</h3>
-      <p class="mb-2">USD to INR: <span id="usdRate" class="text-yellow-400 font-bold">Loading...</span></p>
-      <p>BTC to INR: <span id="btcRate" class="text-yellow-400 font-bold">Loading...</span></p>
+  <!-- Recharge Modal -->
+  <div id="rechargeModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden">
+    <div class="bg-gray-900 p-6 rounded-xl w-80">
+      <h2 class="text-lg font-semibold mb-4">Recharge</h2>
+      <input id="rechargeInput" type="number" placeholder="Amount in ₹" class="w-full p-2 rounded bg-gray-800 mb-4">
+      <div class="flex justify-end gap-2">
+        <button onclick="closeRechargeModal()" class="bg-gray-700 px-4 py-2 rounded">Cancel</button>
+        <button onclick="rechargeAmount()" class="bg-yellow-500 px-4 py-2 rounded">Add</button>
+      </div>
     </div>
+  </div>
 
-    <!-- Buttons -->
-    <div class="flex space-x-6">
-      <button class="bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded-xl shadow">Recharge</button>
-      <button class="bg-red-600 hover:bg-red-500 px-6 py-3 rounded-xl shadow">Withdraw</button>
+  <!-- Withdraw Modal -->
+  <div id="withdrawModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden">
+    <div class="bg-gray-900 p-6 rounded-xl w-80">
+      <h2 class="text-lg font-semibold mb-4">Withdraw</h2>
+      <input id="withdrawInput" type="number" placeholder="Amount in ₹" class="w-full p-2 rounded bg-gray-800 mb-4">
+      <div class="flex justify-end gap-2">
+        <button onclick="closeWithdrawModal()" class="bg-gray-700 px-4 py-2 rounded">Cancel</button>
+        <button onclick="withdrawAmount()" class="bg-yellow-500 px-4 py-2 rounded">Withdraw</button>
+      </div>
     </div>
+  </div>
 
-  </main>
+  <!-- Bottom Nav -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-gray-900 flex justify-around py-2 border-t border-gray-700">
+    <div class="text-center">
+      <div class="text-yellow-400">🏠</div>
+      <div class="text-xs text-gray-400">Home</div>
+    </div>
+    <div class="text-center">
+      <div class="text-white">📊</div>
+      <div class="text-xs text-gray-400">Markets</div>
+    </div>
+    <div class="text-center">
+      <div class="text-white">💱</div>
+      <div class="text-xs text-gray-400">Trade</div>
+    </div>
+    <div class="text-center">
+      <div class="text-white">📁</div>
+      <div class="text-xs text-gray-400">Finance</div>
+    </div>
+  </nav>
 
-  <!-- Scripts -->
+  <!-- JS Logic -->
   <script>
-    // Fetch USD to INR from ExchangeRate API
-    fetch('https://api.exchangerate.host/latest?base=USD&symbols=INR')
-      .then(response => response.json())
+    let assetValue = 0;
+
+    function openRechargeModal() {
+      document.getElementById('rechargeModal').classList.remove('hidden');
+    }
+
+    function closeRechargeModal() {
+      document.getElementById('rechargeModal').classList.add('hidden');
+      document.getElementById('rechargeInput').value = '';
+    }
+
+    function rechargeAmount() {
+      const amount = parseFloat(document.getElementById('rechargeInput').value);
+      if (!isNaN(amount) && amount > 0) {
+        assetValue += amount;
+        updateAssets();
+        closeRechargeModal();
+      }
+    }
+
+    function openWithdrawModal() {
+      document.getElementById('withdrawModal').classList.remove('hidden');
+    }
+
+    function closeWithdrawModal() {
+      document.getElementById('withdrawModal').classList.add('hidden');
+      document.getElementById('withdrawInput').value = '';
+    }
+
+    function withdrawAmount() {
+      const amount = parseFloat(document.getElementById('withdrawInput').value);
+      if (!isNaN(amount) && amount > 0 && amount <= assetValue) {
+        assetValue -= amount;
+        updateAssets();
+        closeWithdrawModal();
+      } else {
+        alert('Invalid or Insufficient Amount');
+      }
+    }
+
+    function updateAssets() {
+      document.getElementById('assetAmount').textContent = `₹ ${assetValue.toLocaleString('en-IN')}`;
+    }
+
+    // Fetch BTC/ETH Prices
+    fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=inr')
+      .then(res => res.json())
       .then(data => {
-        const usdToInr = data.rates.INR.toFixed(2);
-        document.getElementById('usdRate').textContent = `₹ ${usdToInr}`;
-      })
-      .catch(() => {
-        document.getElementById('usdRate').textContent = 'Error';
+        document.getElementById('btcPrice').textContent = `₹ ${data.bitcoin.inr.toLocaleString('en-IN')}`;
+        document.getElementById('ethPrice').textContent = `₹ ${data.ethereum.inr.toLocaleString('en-IN')}`;
       });
-
-    // Fetch BTC to INR from CoinGecko
-    fetch('https://api.exchangerate-api.com/v4/latest/USD')
-    .then(response => response.json())
-    .then(data => {
-      const usdToInr = data.rates.INR.toFixed(2);
-      document.getElementById('usdRate').textContent = `₹ ${usdToInr}`;
-    })
-    .catch(() => {
-      document.getElementById('usdRate').textContent = 'Error';
-    });
-
-  // BTC to INR from CoinGecko
-  fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=inr')
-    .then(response => response.json())
-    .then(data => {
-      const btcToInr = data.bitcoin.inr.toLocaleString('en-IN');
-      document.getElementById('btcRate').textContent = `₹ ${btcToInr}`;
-    })
-    .catch(() => {
-      document.getElementById('btcRate').textContent = 'Error';
-    });
   </script>
-
 </body>
 </html>
