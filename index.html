@@ -1,144 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crypto Dashboard</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-black text-white font-sans">
-  <!-- Header -->
-  <header class="flex justify-between items-center p-4 text-lg border-b border-gray-700">
-    <div class="text-gray-300">coin.example.com</div>
-    <div class="text-xl font-semibold">Space7</div>
-  </header>
+    <header class="flex justify-between items-center p-4 text-lg border-b border-gray-700">
+        <div class="text-gray-300">coin.example.com</div>
+        <div class="text-xl font-semibold">Space7</div>
+    </header>
 
-  <!-- Total Assets -->
-  <section class="text-center py-6">
-    <div class="text-gray-400 text-sm">Total assets (INR)</div>
-    <div id="assetAmount" class="text-3xl font-bold mt-2">₹ 0.00</div>
-  </section>
+    <section class="text-center py-6">
+        <div class="text-gray-400 text-sm">Total assets (INR)</div>
+        <div id="assetAmount" class="text-3xl font-bold mt-2">₹ 0.00</div>
+    </section>
 
-  <!-- Action Buttons -->
-  <div class="flex justify-center gap-6 py-4">
-    <button onclick="openRechargeModal()" class="bg-yellow-500 hover:bg-yellow-400 px-6 py-3 rounded-lg">Recharge</button>
-    <button onclick="openWithdrawModal()" class="bg-yellow-500 hover:bg-yellow-400 px-6 py-3 rounded-lg">Withdrawal</button>
-  </div>
-
-  <!-- Quote Section -->
-  <section class="px-4">
-    <h2 class="text-yellow-400 mb-4 text-lg">Quote</h2>
-    <div class="grid grid-cols-2 gap-4">
-      <div class="bg-gray-800 rounded-xl p-4">
-        <div class="text-sm text-gray-400">BTC/USDT</div>
-        <div class="text-green-400 text-sm">+0.19%</div>
-        <div id="btcPrice" class="text-xl font-bold mt-2">--</div>
-      </div>
-      <div class="bg-gray-800 rounded-xl p-4">
-        <div class="text-sm text-gray-400">ETH/USDT</div>
-        <div class="text-green-400 text-sm">+1.61%</div>
-        <div id="ethPrice" class="text-xl font-bold mt-2">--</div>
-      </div>
+    <div class="flex justify-center gap-6 py-4">
+        <button onclick="openRechargeModal()" class="bg-yellow-500 hover:bg-yellow-400 px-6 py-3 rounded-lg">Recharge</button>
+        <button onclick="openWithdrawModal()" class="bg-yellow-500 hover:bg-yellow-400 px-6 py-3 rounded-lg">Withdrawal</button>
     </div>
-  </section>
 
-  <!-- Recharge Modal -->
-  <div id="rechargeModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden">
-    <div class="bg-gray-900 p-6 rounded-xl w-80">
-      <h2 class="text-lg font-semibold mb-4">Recharge</h2>
-      <input id="rechargeInput" type="number" placeholder="Amount in ₹" class="w-full p-2 rounded bg-gray-800 mb-4">
-      <div class="flex justify-end gap-2">
-        <button onclick="closeRechargeModal()" class="bg-gray-700 px-4 py-2 rounded">Cancel</button>
-        <button onclick="rechargeAmount()" class="bg-yellow-500 px-4 py-2 rounded">Add</button>
-      </div>
+    <section class="px-4">
+        <h2 class="text-yellow-400 mb-4 text-lg">Quote</h2>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="bg-gray-800 rounded-xl p-4">
+                <div class="text-sm text-gray-400">BTC/USDT</div>
+                <div class="text-green-400 text-sm">+0.19%</div>
+                <div id="btcPrice" class="text-xl font-bold mt-2">--</div>
+            </div>
+            <div class="bg-gray-800 rounded-xl p-4">
+                <div class="text-sm text-gray-400">ETH/USDT</div>
+                <div class="text-green-400 text-sm">+1.61%</div>
+                <div id="ethPrice" class="text-xl font-bold mt-2">--</div>
+            </div>
+        </div>
+    </section>
+
+    <div id="rechargeModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden">
+        <div class="bg-gray-900 p-6 rounded-xl w-80">
+            <h2 class="text-lg font-semibold mb-4">Recharge</h2>
+            <div id="rechargeDetails">
+                <p class="text-gray-400 text-sm mb-2">For security reasons, bank details would typically be collected on a secure payment gateway. This is a simplified demonstration.</p>
+                <input id="rechargeInput" type="number" placeholder="Amount in ₹" class="w-full p-2 rounded bg-gray-800 mb-4">
+                <div class="mb-4">
+                    <label for="bankName" class="block text-gray-400 text-sm mb-1">Bank Name</label>
+                    <input type="text" id="bankName" class="w-full p-2 rounded bg-gray-800">
+                </div>
+                <div class="mb-4">
+                    <label for="accountNumber" class="block text-gray-400 text-sm mb-1">Account Number</label>
+                    <input type="text" id="accountNumber" class="w-full p-2 rounded bg-gray-800">
+                </div>
+                <div class="mb-4">
+                    <label for="ifscCode" class="block text-gray-400 text-sm mb-1">IFSC Code</label>
+                    <input type="text" id="ifscCode" class="w-full p-2 rounded bg-gray-800">
+                </div>
+            </div>
+            <div class="flex justify-end gap-2">
+                <button onclick="closeRechargeModal()" class="bg-gray-700 px-4 py-2 rounded">Cancel</button>
+                <button onclick="rechargeAmount()" class="bg-yellow-500 px-4 py-2 rounded">Add</button>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Withdraw Modal -->
-  <div id="withdrawModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden">
-    <div class="bg-gray-900 p-6 rounded-xl w-80">
-      <h2 class="text-lg font-semibold mb-4">Withdraw</h2>
-      <input id="withdrawInput" type="number" placeholder="Amount in ₹" class="w-full p-2 rounded bg-gray-800 mb-4">
-      <div class="flex justify-end gap-2">
-        <button onclick="closeWithdrawModal()" class="bg-gray-700 px-4 py-2 rounded">Cancel</button>
-        <button onclick="withdrawAmount()" class="bg-yellow-500 px-4 py-2 rounded">Withdraw</button>
-      </div>
+    <div id="withdrawModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden">
+        <div class="bg-gray-900 p-6 rounded-xl w-80">
+            <h2 class="text-lg font-semibold mb-4">Withdraw</h2>
+            <input id="withdrawInput" type="number" placeholder="Amount in ₹" class="w-full p-2 rounded bg-gray-800 mb-4">
+            <div class="flex justify-end gap-2">
+                <button onclick="closeWithdrawModal()" class="bg-gray-700 px-4 py-2 rounded">Cancel</button>
+                <button onclick="withdrawAmount()" class="bg-yellow-500 px-4 py-2 rounded">Withdraw</button>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Bottom Nav -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-gray-900 flex justify-around py-2 border-t border-gray-700">
-    <div class="text-center">
-      <div class="text-yellow-400">🏠</div>
-      <div class="text-xs text-gray-400">Home</div>
-    </div>
-    <div class="text-center">
-      <div class="text-white">📊</div>
-      <div class="text-xs text-gray-400">Markets</div>
-    </div>
-    <div class="text-center">
-      <div class="text-white">💱</div>
-      <div class="text-xs text-gray-400">Trade</div>
-    </div>
-    <div class="text-center">
-      <div class="text-white">📁</div>
-      <div class="text-xs text-gray-400">Finance</div>
-    </div>
-  </nav>
+    <nav class="fixed bottom-0 left-0 right-0 bg-gray-900 flex justify-around py-2 border-t border-gray-700">
+        <div class="text-center">
+            <div class="text-yellow-400">🏠</div>
+            <div class="text-xs text-gray-400">Home</div>
+        </div>
+        <div class="text-center">
+            <div class="text-white">📊</div>
+            <div class="text-xs text-gray-400">Markets</div>
+        </div>
+        <div class="text-center">
+            <div class="text-white">💱</div>
+            <div class="text-xs text-gray-400">Trade</div>
+        </div>
+        <div class="text-center">
+            <div class="text-white">📁</div>
+            <div class="text-xs text-gray-400">Finance</div>
+        </div>
+    </nav>
 
-  <!-- JS Logic -->
-  <script>
-    let assetValue = 0;
+    <script>
+        let assetValue = 0;
 
-    function openRechargeModal() {
-      document.getElementById('rechargeModal').classList.remove('hidden');
-    }
+        function openRechargeModal() {
+            document.getElementById('rechargeModal').classList.remove('hidden');
+        }
 
-    function closeRechargeModal() {
-      document.getElementById('rechargeModal').classList.add('hidden');
-      document.getElementById('rechargeInput').value = '';
-    }
+        function closeRechargeModal() {
+            document.getElementById('rechargeModal').classList.add('hidden');
+            document.getElementById('rechargeInput').value = '';
+            document.getElementById('bankName').value = '';
+            document.getElementById('accountNumber').value = '';
+            document.getElementById('ifscCode').value = '';
+        }
 
-    function rechargeAmount() {
-      const amount = parseFloat(document.getElementById('rechargeInput').value);
-      if (!isNaN(amount) && amount > 0) {
-        assetValue += amount;
-        updateAssets();
-        closeRechargeModal();
-      }
-    }
+        function rechargeAmount() {
+            const amount = parseFloat(document.getElementById('rechargeInput').value);
+            const bankName = document.getElementById('bankName').value.trim();
+            const accountNumber = document.getElementById('accountNumber').value.trim();
+            const ifscCode = document.getElementById('ifscCode').value.trim();
 
-    function openWithdrawModal() {
-      document.getElementById('withdrawModal').classList.remove('hidden');
-    }
+            if (!isNaN(amount) && amount > 0 && bankName && accountNumber && ifscCode) {
+                // In a real application, you would send this data to a secure backend server
+                console.log('Recharge initiated:', { amount, bankName, accountNumber, ifscCode });
 
-    function closeWithdrawModal() {
-      document.getElementById('withdrawModal').classList.add('hidden');
-      document.getElementById('withdrawInput').value = '';
-    }
+                // For this simplified example, we'll just update the local asset value
+                assetValue += amount;
+                updateAssets();
+                closeRechargeModal();
+                alert('Recharge request submitted (for demonstration purposes only)');
+            } else {
+                alert('Please enter a valid amount and bank details.');
+            }
+        }
 
-    function withdrawAmount() {
-      const amount = parseFloat(document.getElementById('withdrawInput').value);
-      if (!isNaN(amount) && amount > 0 && amount <= assetValue) {
-        assetValue -= amount;
-        updateAssets();
-        closeWithdrawModal();
-      } else {
-        alert('Invalid or Insufficient Amount');
-      }
-    }
+        function openWithdrawModal() {
+            document.getElementById('withdrawModal').classList.remove('hidden');
+        }
 
-    function updateAssets() {
-      document.getElementById('assetAmount').textContent = `₹ ${assetValue.toLocaleString('en-IN')}`;
-    }
+        function closeWithdrawModal() {
+            document.getElementById('withdrawModal').classList.add('hidden');
+            document.getElementById('withdrawInput').value = '';
+        }
 
-    // Fetch BTC/ETH Prices
-    fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=inr')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('btcPrice').textContent = `₹ ${data.bitcoin.inr.toLocaleString('en-IN')}`;
-        document.getElementById('ethPrice').textContent = `₹ ${data.ethereum.inr.toLocaleString('en-IN')}`;
-      });
-  </script>
+        function withdrawAmount() {
+            const amount = parseFloat(document.getElementById('withdrawInput').value);
+            if (!isNaN(amount) && amount > 0 && amount <= assetValue) {
+                assetValue -= amount;
+                updateAssets();
+                closeWithdrawModal();
+                alert('Withdrawal successful (for demonstration purposes only)');
+                console.log('Withdrawal initiated:', { amount });
+                // In a real application, you would trigger a withdrawal process via a backend server
+            } else {
+                alert('Invalid or Insufficient Amount');
+            }
+        }
+
+        function updateAssets() {
+            document.getElementById('assetAmount').textContent = `₹ ${assetValue.toLocaleString('en-IN')}`;
+        }
+
+        // Fetch BTC/ETH Prices
+        fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=inr')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('btcPrice').textContent = `₹ ${data.bitcoin.inr.toLocaleString('en-IN')}`;
+                document.getElementById('ethPrice').textContent = `₹ ${data.ethereum.inr.toLocaleString('en-IN')}`;
+            });
+    </script>
 </body>
 </html>
