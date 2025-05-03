@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crypto Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-    <link rel="stylesheet" href="style.css">
 <body class="bg-black text-white font-sans">
     <header class="flex justify-between items-center p-4 text-lg border-b border-gray-700">
         <div class="text-gray-300">coin.example.com</div>
@@ -94,8 +95,85 @@
             <div class="text-xs text-gray-400">Finance</div>
         </div>
     </nav>
+<div class="quotes">
+    <h3 class="quote-title">Quote</h3>
+
+    <div>
+        <h4 style="color: #f0f0f0;">BTC/USDT</h4>
+        <canvas id="btcChart" width="400" height="200"></canvas>
+    </div>
+
+    <div style="margin-top: 30px;">
+        <h4 style="color: #f0f0f0;">ETH/USDT</h4>
+        <canvas id="ethChart" width="400" height="200"></canvas>
+    </div>
+</div>
 
     <script>
+        const btcCtx = document.getElementById('btcChart').getContext('2d');
+  const ethCtx = document.getElementById('ethChart').getContext('2d');
+
+  const btcChart = new Chart(btcCtx, {
+    type: 'line',
+    data: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      datasets: [{
+        label: 'BTC Price',
+        data: [90000, 91500, 91000, 93000, 92500, 94000, 94180],
+        borderColor: '#f5d88b',
+        backgroundColor: 'rgba(245, 216, 139, 0.1)',
+        tension: 0.3
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          ticks: { color: '#fff' }
+        },
+        x: {
+          ticks: { color: '#fff' }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: '#fff'
+          }
+        }
+      }
+    }
+  });
+
+  const ethChart = new Chart(ethCtx, {
+    type: 'line',
+    data: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      datasets: [{
+        label: 'ETH Price',
+        data: [1650, 1700, 1720, 1680, 1740, 1780, 1793],
+        borderColor: '#1fc99b',
+        backgroundColor: 'rgba(31, 201, 155, 0.1)',
+        tension: 0.3
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          ticks: { color: '#fff' }
+        },
+        x: {
+          ticks: { color: '#fff' }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: '#fff'
+          }
+        }
+      }
+    }
+  });
         let assetValue = 0;
 
         function openRechargeModal() {
