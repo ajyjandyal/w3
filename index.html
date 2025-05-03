@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crypto Dashboard</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-black text-white font-sans">
     <header class="flex justify-between items-center p-4 text-lg border-b border-gray-700">
@@ -40,25 +40,14 @@
         </div>
     </section>
 
+    <!-- Recharge Modal -->
     <div id="rechargeModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden">
         <div class="bg-gray-900 p-6 rounded-xl w-80">
             <h2 class="text-lg font-semibold mb-4">Recharge</h2>
-            <div id="rechargeDetails">
-                <p class="text-gray-400 text-sm mb-2">For security reasons, bank details would typically be collected on a secure payment gateway. This is a simplified demonstration.</p>
-                <input id="rechargeInput" type="number" placeholder="Amount in ₹" class="w-full p-2 rounded bg-gray-800 mb-4">
-                <div class="mb-4">
-                    <label for="bankName" class="block text-gray-400 text-sm mb-1">Bank Name</label>
-                    <input type="text" id="bankName" class="w-full p-2 rounded bg-gray-800">
-                </div>
-                <div class="mb-4">
-                    <label for="accountNumber" class="block text-gray-400 text-sm mb-1">Account Number</label>
-                    <input type="text" id="accountNumber" class="w-full p-2 rounded bg-gray-800">
-                </div>
-                <div class="mb-4">
-                    <label for="ifscCode" class="block text-gray-400 text-sm mb-1">IFSC Code</label>
-                    <input type="text" id="ifscCode" class="w-full p-2 rounded bg-gray-800">
-                </div>
-            </div>
+            <input id="rechargeInput" type="number" placeholder="Amount in ₹" class="w-full p-2 rounded bg-gray-800 mb-4">
+            <input id="bankName" type="text" placeholder="Bank Name" class="w-full p-2 rounded bg-gray-800 mb-4">
+            <input id="accountNumber" type="text" placeholder="Account Number" class="w-full p-2 rounded bg-gray-800 mb-4">
+            <input id="ifscCode" type="text" placeholder="IFSC Code" class="w-full p-2 rounded bg-gray-800 mb-4">
             <div class="flex justify-end gap-2">
                 <button onclick="closeRechargeModal()" class="bg-gray-700 px-4 py-2 rounded">Cancel</button>
                 <button onclick="rechargeAmount()" class="bg-yellow-500 px-4 py-2 rounded">Add</button>
@@ -66,6 +55,7 @@
         </div>
     </div>
 
+    <!-- Withdraw Modal -->
     <div id="withdrawModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden">
         <div class="bg-gray-900 p-6 rounded-xl w-80">
             <h2 class="text-lg font-semibold mb-4">Withdraw</h2>
@@ -95,85 +85,21 @@
             <div class="text-xs text-gray-400">Finance</div>
         </div>
     </nav>
-<div class="quotes">
-    <h3 class="quote-title">Quote</h3>
 
-    <div>
-        <h4 style="color: #f0f0f0;">BTC/USDT</h4>
-        <canvas id="btcChart" width="400" height="200"></canvas>
+    <!-- Chart Section -->
+    <div class="p-4">
+        <h3 class="text-yellow-400 text-lg mb-4">Price Charts</h3>
+        <div class="mb-6">
+            <h4 class="text-white">BTC/USDT</h4>
+            <canvas id="btcChart" height="200"></canvas>
+        </div>
+        <div>
+            <h4 class="text-white">ETH/USDT</h4>
+            <canvas id="ethChart" height="200"></canvas>
+        </div>
     </div>
-
-    <div style="margin-top: 30px;">
-        <h4 style="color: #f0f0f0;">ETH/USDT</h4>
-        <canvas id="ethChart" width="400" height="200"></canvas>
-    </div>
-</div>
 
     <script>
-        const btcCtx = document.getElementById('btcChart').getContext('2d');
-  const ethCtx = document.getElementById('ethChart').getContext('2d');
-
-  const btcChart = new Chart(btcCtx, {
-    type: 'line',
-    data: {
-      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-      datasets: [{
-        label: 'BTC Price',
-        data: [90000, 91500, 91000, 93000, 92500, 94000, 94180],
-        borderColor: '#f5d88b',
-        backgroundColor: 'rgba(245, 216, 139, 0.1)',
-        tension: 0.3
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          ticks: { color: '#fff' }
-        },
-        x: {
-          ticks: { color: '#fff' }
-        }
-      },
-      plugins: {
-        legend: {
-          labels: {
-            color: '#fff'
-          }
-        }
-      }
-    }
-  });
-
-  const ethChart = new Chart(ethCtx, {
-    type: 'line',
-    data: {
-      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-      datasets: [{
-        label: 'ETH Price',
-        data: [1650, 1700, 1720, 1680, 1740, 1780, 1793],
-        borderColor: '#1fc99b',
-        backgroundColor: 'rgba(31, 201, 155, 0.1)',
-        tension: 0.3
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          ticks: { color: '#fff' }
-        },
-        x: {
-          ticks: { color: '#fff' }
-        }
-      },
-      plugins: {
-        legend: {
-          labels: {
-            color: '#fff'
-          }
-        }
-      }
-    }
-  });
         let assetValue = 0;
 
         function openRechargeModal() {
@@ -195,10 +121,6 @@
             const ifscCode = document.getElementById('ifscCode').value.trim();
 
             if (!isNaN(amount) && amount > 0 && bankName && accountNumber && ifscCode) {
-                // In a real application, you would send this data to a secure backend server
-                console.log('Recharge initiated:', { amount, bankName, accountNumber, ifscCode });
-
-                // For this simplified example, we'll just update the local asset value
                 assetValue += amount;
                 updateAssets();
                 closeRechargeModal();
@@ -224,8 +146,6 @@
                 updateAssets();
                 closeWithdrawModal();
                 alert('Withdrawal successful (for demonstration purposes only)');
-                console.log('Withdrawal initiated:', { amount });
-                // In a real application, you would trigger a withdrawal process via a backend server
             } else {
                 alert('Invalid or Insufficient Amount');
             }
@@ -235,13 +155,65 @@
             document.getElementById('assetAmount').textContent = `₹ ${assetValue.toLocaleString('en-IN')}`;
         }
 
-        // Fetch BTC/ETH Prices
         fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=inr')
             .then(res => res.json())
             .then(data => {
                 document.getElementById('btcPrice').textContent = `₹ ${data.bitcoin.inr.toLocaleString('en-IN')}`;
                 document.getElementById('ethPrice').textContent = `₹ ${data.ethereum.inr.toLocaleString('en-IN')}`;
             });
+
+        const btcCtx = document.getElementById('btcChart').getContext('2d');
+        const ethCtx = document.getElementById('ethChart').getContext('2d');
+
+        new Chart(btcCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'BTC Price',
+                    data: [90000, 91500, 91000, 93000, 92500, 94000, 94180],
+                    borderColor: '#f5d88b',
+                    backgroundColor: 'rgba(245, 216, 139, 0.1)',
+                    tension: 0.3
+                }]
+            },
+            options: {
+                scales: {
+                    y: { ticks: { color: '#fff' } },
+                    x: { ticks: { color: '#fff' } }
+                },
+                plugins: {
+                    legend: {
+                        labels: { color: '#fff' }
+                    }
+                }
+            }
+        });
+
+        new Chart(ethCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'ETH Price',
+                    data: [1650, 1700, 1720, 1680, 1740, 1780, 1793],
+                    borderColor: '#1fc99b',
+                    backgroundColor: 'rgba(31, 201, 155, 0.1)',
+                    tension: 0.3
+                }]
+            },
+            options: {
+                scales: {
+                    y: { ticks: { color: '#fff' } },
+                    x: { ticks: { color: '#fff' } }
+                },
+                plugins: {
+                    legend: {
+                        labels: { color: '#fff' }
+                    }
+                }
+            }
+        });
     </script>
 </body>
 </html>
